@@ -10,10 +10,10 @@ content: |
   {% set total = state_attr(sensor, 'total_aanbiedingen') %}
   {% set site = state_attr(sensor, 'site_url') %}
   **{{ states(sensor) }} per liter** — [{{ total }} aanbiedingen op biernet.nl]({{ site }})
-  | # | Bier | Winkel | Prijs | per liter |
-  |---|---|---|---|---|
+  | # | Bier | Verpakking | Winkel | Prijs | per liter | Geldig |
+  |---|---|---|---|---|---|---|
   {%- for i in items %}
-  | {{ loop.index }} | [{{ i.naam }}]({{ i.url }}) | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** |
+  | {{ loop.index }} | [{{ i.naam }}]({{ i.url }}) | {{ i.verpakking }} | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** | {{ i.geldig }} |
   {%- endfor %}
   {%- else %}
   Geen aanbiedingen gevonden.
