@@ -54,15 +54,46 @@ content: |
   {% set total = state_attr(sensor, 'total_aanbiedingen') %}
   {% set site = state_attr(sensor, 'site_url') %}
   **{{ states(sensor) }} per liter** — [{{ total }} aanbiedingen op biernet.nl]({{ site }})
-  | # | Bier | Winkel | Prijs | per liter |
-  |---|---|---|---|---|
+  | # | Bier | Winkel | Prijs | per liter | Geldig |
+  |---|---|---|---|---|---|
   {%- for i in items %}
-  | {{ loop.index }} | [{{ i.naam }}]({{ i.url }}) | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** |
+  | {{ loop.index }} | [{{ i.naam }}]({{ i.url }}) | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** | {{ i.geldig }} |
   {%- endfor %}
   {%- else %}
   Geen aanbiedingen gevonden.
   {%- endif %}
 ```
+
+## Biernet Card (custom card)
+
+Voor een kaart met winkellogo's, productafbeeldingen, verpakking (sixpack, krat, fles, fust)
+en de geldigheid van elke aanbieding is er een custom card: [`biernet-card.js`](biernet-card.js).
+
+### Installeren
+
+1. Download [`biernet-card.js`](biernet-card.js) naar `<config>/www/biernet-card.js`
+2. Voeg het bestand toe als resource:
+   - Dashboard → Bewerken → Dashboard-resources beheren → **Resource toevoegen**
+   - URL: `/local/biernet-card.js`, type: `JavaScript-module`
+3. Herlaad de pagina (hard refresh)
+
+### Gebruik
+
+```yaml
+type: custom:biernet-card
+entity: sensor.biernet_alcoholvrije_blikjes_en_flesjes
+title: Alcoholvrij — beste literprijs
+max_items: 10
+```
+
+Opties:
+
+- `entity` (verplicht) – de Biernet-sensor
+- `title` – koptekst van de kaart (standaard: de sensornaam)
+- `max_items` – aantal rijen (standaard: 10)
+
+Elke rij toont de productafbeelding, naam, verpakking, geldigheid (bijv. "t/m dinsdag 10 november"),
+winkellogo met winkelnaam, prijs en literprijs. Klik op een rij opent de aanbieding op biernet.nl.
 
 ## Technische werking
 
