@@ -3,7 +3,12 @@
 Alle opvallende wijzigingen aan de Biernet-integratie staan in dit bestand.
 Het versienummer komt overeen met de tag/release op GitHub en de `version` in `manifest.json`.
 
-## [1.2.0] — niet gereleased
+## [1.2.1] — niet gereleased
+
+- Fix: winkelnamen zoals "Poiesz Logo" zijn nu zonder het "Logo"-achtervoegsel (biernet.nl gebruikt de titel van het logo als winkelnaam)
+- Custom card: productafbeeldingen hebben geen grijze achtergrond meer, de winkelkolom heeft een vaste breedte (logo's en namen verspringen niet meer tussen rijen) en de koptekst toont "10 van 30 aanbiedingen" in plaats van alleen het totaal
+
+## [1.2.0]
 
 - Fix: de entry-migratie crashte met `AttributeError: version cannot be changed directly`; de versie wordt nu via `async_update_entry` gezet en de percentage-mapping gebruikt hele procenten (`0tm1` in plaats van `0.0tm1.0`)
 - Fix: de markdown-voorbeeldkaart gebruikte `content: >` waardoor de tabel niet als tabel werd gerenderd; nu `content: |`, met kant-en-klare kaart in `examples/`
