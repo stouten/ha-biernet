@@ -9,10 +9,11 @@
           "winkel": "Winkels",
           "soort": "Biersoorten",
           "verpakking": "Verpakkingen",
-          "percentage": "Alcoholpercentage",
           "sorteer": "Sortering",
           "top_n": "Aantal aanbiedingen in sensor (top N)",
-          "update_hours": "Verversinterval in uren"
+          "update_hours": "Verversinterval in uren",
+          "percentage_min": "Minimum alcoholpercentage (%)",
+          "percentage_max": "Maximum alcoholpercentage (%)"
         }
       }
     },
@@ -28,10 +29,11 @@
           "winkel": "Winkels",
           "soort": "Biersoorten",
           "verpakking": "Verpakkingen",
-          "percentage": "Alcoholpercentage",
           "sorteer": "Sortering",
           "top_n": "Aantal aanbiedingen in sensor (top N)",
-          "update_hours": "Verversinterval in uren"
+          "update_hours": "Verversinterval in uren",
+          "percentage_min": "Minimum alcoholpercentage (%)",
+          "percentage_max": "Maximum alcoholpercentage (%)"
         }
       }
     }

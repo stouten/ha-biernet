@@ -10,12 +10,25 @@ CONF_WINKEL = "winkel"
 CONF_SOORT = "soort"
 CONF_VERPAKKING = "verpakking"
 CONF_PERCENTAGE = "percentage"
+CONF_PERCENTAGE_MIN = "percentage_min"
+CONF_PERCENTAGE_MAX = "percentage_max"
 CONF_SORTEER = "sorteer"
 CONF_TOP_N = "top_n"
 CONF_UPDATE_HOURS = "update_hours"
 
 DEFAULT_TOP_N = 10
 DEFAULT_UPDATE_HOURS = 24
+DEFAULT_PERCENTAGE_MIN = 0.0
+DEFAULT_PERCENTAGE_MAX = 20.0
+
+PERCENTAGE_RANGES = {
+    "": (0.0, 20.0),
+    "0tm1": (0.0, 1.0),
+    "0tm3": (0.0, 3.0),
+    "0tm5": (0.0, 5.0),
+    "1tm5": (1.0, 5.0),
+    "5tm10": (5.0, 10.0),
+}
 
 WINKELS = {
     "albert-heijn": "Albert Heijn",
