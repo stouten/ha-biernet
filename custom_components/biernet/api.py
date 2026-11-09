@@ -20,6 +20,8 @@ PRIJS_RE = re.compile(r'class="voor_prijss+">\s*€\s*([\d.,]+)')
 LITER_RE = re.compile(r"€\s*([\d.,]+)\s*per liter")
 GELDIG_RE = re.compile(r'class="laatste_regel">([^<]+)<')
 URL_RE = re.compile(r'class="item_url" href="([^"]+)"')
+WINKEL_LOGO_RE = re.compile(r'class="logo_image".*?data-src="([^"]+)"', re.S)
+PRODUCT_IMAGE_RE = re.compile(r'class="item_image".*?data-src="([^"]+)"', re.S)
 
 
 class BiernetClientError(Exception):
@@ -46,6 +48,8 @@ def parse_offers(response: str) -> list[dict[str, Any]]:
         liter = LITER_RE.search(block)
         geldig = GELDIG_RE.search(block)
         url = URL_RE.search(block)
+        winkel_logo = WINKEL_LOGO_RE.search(block)
+        product_image = PRODUCT_IMAGE_RE.search(block)
 
         if not (naam and prijs and liter):
             continue
@@ -59,6 +63,8 @@ def parse_offers(response: str) -> list[dict[str, Any]]:
                 "literprijs": liter.group(1).replace(",", "."),
                 "geldig": _clean(geldig.group(1)) if geldig else "",
                 "url": BASE_URL + unescape(url.group(1)) if url else "",
+                "winkel_logo": BASE_URL + unescape(winkel_logo.group(1)) if winkel_logo else "",
+                "afbeelding": BASE_URL + unescape(product_image.group(1)) if product_image else "",
             }
         )
 

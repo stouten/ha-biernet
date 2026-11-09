@@ -34,7 +34,7 @@ Bestaande zoekopdrachten pas je aan via **Configureren** op de integratie-entry.
 
 - **State**: laagste literprijs (€/l) van de zoekopdracht
 - **Attributen**:
-  - `items` – lijst met `naam`, `verpakking`, `winkel`, `prijs`, `literprijs`, `geldig`, `url`
+  - `items` – lijst met `naam`, `verpakking`, `winkel`, `prijs`, `literprijs`, `geldig`, `url`, `winkel_logo` en `afbeelding`
   - `count`, `total_aanbiedingen`
   - `filters` – leesbare samenvatting van de filters
   - `site_url` – link naar de bijbehorende biernet.nl-pagina
