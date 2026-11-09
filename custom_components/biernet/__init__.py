@@ -97,8 +97,7 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             )
             data["percentage_min"] = percentage_min
             data["percentage_max"] = percentage_max
-        hass.config_entries.async_update_entry(entry, data=data)
-        entry.version = 2
+        hass.config_entries.async_update_entry(entry, data=data, version=2)
     return True
 
 
