@@ -41,16 +41,27 @@ Bestaande zoekopdrachten pas je aan via **Configureren** op de integratie-entry.
 
 ## Voorbeeldkaart
 
+Zie [`examples/biernet-markdown-card.yaml`](examples/biernet-markdown-card.yaml) voor een kant-en-klare kaart.
+Gebruik `content: |` (niet `>`): een `>` vouwt alle regels tot één regel, waardoor de tabel niet als tabel wordt gerenderd.
+
 ```yaml
 type: markdown
 title: Alcoholvrij — beste literprijs
-content: >
-  {%- set items = state_attr('sensor.biernet_alcoholvrij', 'items') or [] %}
-  | # | Bier | Verpakking | Winkel | Prijs | per liter |
-  |---|---|---|---|---|---|
+content: |
+  {%- set sensor = 'sensor.biernet_alcoholvrije_blikjes_en_flesjes' %}
+  {%- set items = state_attr(sensor, 'items') or [] %}
+  {%- if items %}
+  {% set total = state_attr(sensor, 'total_aanbiedingen') %}
+  {% set site = state_attr(sensor, 'site_url') %}
+  **{{ states(sensor) }} per liter** — [{{ total }} aanbiedingen op biernet.nl]({{ site }})
+  | # | Bier | Winkel | Prijs | per liter |
+  |---|---|---|---|---|
   {%- for i in items %}
-  | {{ loop.index }} | {{ i.naam }} | {{ i.verpakking }} | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** |
+  | {{ loop.index }} | [{{ i.naam }}]({{ i.url }}) | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** |
   {%- endfor %}
+  {%- else %}
+  Geen aanbiedingen gevonden.
+  {%- endif %}
 ```
 
 ## Technische werking

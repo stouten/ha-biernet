@@ -1,0 +1,20 @@
+# Biernet markdown kaart — beste literprijs per zoekopdracht.
+# Belangrijk: gebruik content: | (literal block). Met > worden alle
+# regels tot één regel gevouwen en wordt de tabel niet als tabel gerenderd.
+type: markdown
+title: Alcoholvrij — beste literprijs
+content: |
+  {%- set sensor = 'sensor.biernet_alcoholvrije_blikjes_en_flesjes' %}
+  {%- set items = state_attr(sensor, 'items') or [] %}
+  {%- if items %}
+  {% set total = state_attr(sensor, 'total_aanbiedingen') %}
+  {% set site = state_attr(sensor, 'site_url') %}
+  **{{ states(sensor) }} per liter** — [{{ total }} aanbiedingen op biernet.nl]({{ site }})
+  | # | Bier | Winkel | Prijs | per liter |
+  |---|---|---|---|---|
+  {%- for i in items %}
+  | {{ loop.index }} | [{{ i.naam }}]({{ i.url }}) | {{ i.winkel }} | €{{ i.prijs }} | **€{{ i.literprijs }}** |
+  {%- endfor %}
+  {%- else %}
+  Geen aanbiedingen gevonden.
+  {%- endif %}
