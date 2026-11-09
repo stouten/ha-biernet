@@ -9,10 +9,11 @@
           "winkel": "Stores",
           "soort": "Beer types",
           "verpakking": "Packaging",
-          "percentage": "Alcohol percentage",
           "sorteer": "Sorting",
           "top_n": "Number of offers in sensor (top N)",
-          "update_hours": "Update interval in hours"
+          "update_hours": "Update interval in hours",
+          "percentage_min": "Minimum alcohol percentage (%)",
+          "percentage_max": "Maximum alcohol percentage (%)"
         }
       }
     },
@@ -28,10 +29,11 @@
           "winkel": "Stores",
           "soort": "Beer types",
           "verpakking": "Packaging",
-          "percentage": "Alcohol percentage",
           "sorteer": "Sorting",
           "top_n": "Number of offers in sensor (top N)",
-          "update_hours": "Update interval in hours"
+          "update_hours": "Update interval in hours",
+          "percentage_min": "Minimum alcohol percentage (%)",
+          "percentage_max": "Maximum alcohol percentage (%)"
         }
       }
     }

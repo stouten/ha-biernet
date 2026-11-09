@@ -13,8 +13,10 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .api import BiernetClient, BiernetClientError
 from .const import (
+    DEFAULT_PERCENTAGE_MAX,
+    DEFAULT_PERCENTAGE_MIN,
     DOMAIN,
-    PERCENTAGES,
+    PERCENTAGE_RANGES,
     SOORTEN,
     VERPAKKING_PARAMS,
     WINKELS,
@@ -34,8 +36,14 @@ def build_filters(data: dict[str, Any]) -> dict[str, str]:
         param = VERPAKKING_PARAMS.get(verpakking)
         if param:
             filters[param] = verpakking
-    if data.get("percentage"):
-        filters["percentage"] = data["percentage"]
+    percentage_min = data.get("percentage_min")
+    percentage_max = data.get("percentage_max")
+    if percentage_min is not None or percentage_max is not None:
+        filters["percentage"] = (
+            f"{percentage_min if percentage_min is not None else DEFAULT_PERCENTAGE_MIN}"
+            f"tm"
+            f"{percentage_max if percentage_max is not None else DEFAULT_PERCENTAGE_MAX}"
+        )
     if data.get("sorteer"):
         filters["sorteer"] = data["sorteer"]
     return filters
@@ -54,8 +62,12 @@ def build_site_url(data: dict[str, Any]) -> str:
         param = VERPAKKING_PARAMS.get(verpakking)
         if param:
             segments.append(f"{param}:{verpakking}")
-    if data.get("percentage"):
-        segments.append("percentage:" + data["percentage"])
+    percentage_min = data.get("percentage_min")
+    percentage_max = data.get("percentage_max")
+    if percentage_min is not None or percentage_max is not None:
+        lo = percentage_min if percentage_min is not None else DEFAULT_PERCENTAGE_MIN
+        hi = percentage_max if percentage_max is not None else DEFAULT_PERCENTAGE_MAX
+        segments.append(f"percentage:{lo}tm{hi}")
     if data.get("sorteer"):
         segments.append("sorteer:" + data["sorteer"])
     path = "/".join(segments)
@@ -68,16 +80,34 @@ def humanize_filters(data: dict[str, Any]) -> dict[str, Any]:
         "winkels": [WINKELS.get(w, w) for w in data.get("winkel", [])],
         "soorten": [SOORTEN.get(s, s) for s in data.get("soort", [])],
         "verpakkingen": [VERPAKKING_PARAMS.get(v, v) for v in data.get("verpakking", [])],
-        "percentage": PERCENTAGES.get(data.get("percentage", ""), data.get("percentage", "")),
+        "percentage_min": data.get("percentage_min", DEFAULT_PERCENTAGE_MIN),
+        "percentage_max": data.get("percentage_max", DEFAULT_PERCENTAGE_MAX),
         "sortering": data.get("sorteer", ""),
     }
 
 
+async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Migrate old entries that used the fixed percentage buckets."""
+    if entry.version == 1:
+        data = {**entry.data}
+        percentage = data.pop("percentage", None)
+        if percentage is not None:
+            percentage_min, percentage_max = PERCENTAGE_RANGES.get(
+                percentage, (DEFAULT_PERCENTAGE_MIN, DEFAULT_PERCENTAGE_MAX)
+            )
+            data["percentage_min"] = percentage_min
+            data["percentage_max"] = percentage_max
+        hass.config_entries.async_update_entry(entry, data=data)
+        entry.version = 2
+    return True
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Biernet from a config entry."""
-    client = BiernetClient(async_get_clientsession(hass), build_filters(entry.data))
-    top_n = int(entry.data.get("top_n", 10))
-    update_hours = float(entry.data.get("update_hours", 24))
+    settings = {**entry.data, **entry.options}
+    client = BiernetClient(async_get_clientsession(hass), build_filters(settings))
+    top_n = int(settings.get("top_n", 10))
+    update_hours = float(settings.get("update_hours", 24))
 
     async def async_update() -> dict[str, Any]:
         offers = await client.async_fetch_offers()
@@ -96,7 +126,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady("Initial biernet.nl fetch failed")
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
-    await hass.config_entries.async_forward_platforms(entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
 

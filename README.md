@@ -22,7 +22,7 @@ Copy `custom_components/biernet/` to `<config>/custom_components/biernet/` and r
    - **Winkels** – meerdere te selecteren (Albert Heijn, Jumbo, Gall & Gall, ...)
    - **Biersoorten** – alcoholvrij, pils, radler, IPA, ...
    - **Verpakkingen** – alle blikjes / flessen / kratten / fusten
-   - **Alcoholpercentage** – bijv. `0 tot 1% (alcoholvrij)`
+   - **Alcoholpercentage** – min en max met schuifbalken, hele procenten (bijv. 0 tot 1% voor alcoholvrij)
    - **Sortering** – bijv. literprijs oplopend
    - **Top N** – aantal aanbiedingen in de sensor (standaard 10)
    - **Verversinterval** – uren (standaard 24)
