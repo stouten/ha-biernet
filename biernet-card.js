@@ -71,8 +71,10 @@ class BiernetCard extends HTMLElement {
         </a>`;
     });
 
+    const shown = Math.min(items.length, maxItems);
+    const total = stateObj.attributes.total_aanbiedingen || items.length;
     const headerLink = siteUrl
-      ? `<a class="biernet-header-link" href="${siteUrl}" target="_blank" rel="noopener noreferrer">${stateObj.attributes.total_aanbiedingen || items.length} aanbiedingen op biernet.nl</a>`
+      ? `<a class="biernet-header-link" href="${siteUrl}" target="_blank" rel="noopener noreferrer">${shown} van ${total} aanbiedingen op biernet.nl</a>`
       : "";
 
     this.innerHTML = `
@@ -128,7 +130,6 @@ class BiernetCard extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--secondary-background-color);
           border-radius: 8px;
           overflow: hidden;
         }
@@ -156,7 +157,7 @@ class BiernetCard extends HTMLElement {
           color: var(--primary-color);
         }
         .biernet-store {
-          flex: 0 0 auto;
+          flex: 0 0 100px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -164,11 +165,10 @@ class BiernetCard extends HTMLElement {
           font-size: 0.8em;
           color: var(--secondary-text-color);
           text-align: center;
-          max-width: 90px;
         }
         .biernet-store-logo {
-          max-width: 100%;
-          max-height: 32px;
+          width: 100%;
+          height: 32px;
           object-fit: contain;
         }
         .biernet-prices {
