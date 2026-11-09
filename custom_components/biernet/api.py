@@ -34,6 +34,14 @@ def _clean(text: str | None) -> str:
     return unescape(re.sub(r"\s+", " ", text)).strip()
 
 
+def _clean_store(text: str | None) -> str:
+    """Clean a store name and drop image artifacts like 'Poiesz Logo'."""
+    name = _clean(text).title()
+    if name.endswith(" Logo"):
+        name = name[: -len(" Logo")]
+    return name
+
+
 def parse_offers(response: str) -> list[dict[str, Any]]:
     """Parse the HTML fragment returned by the offer list endpoint."""
     if "Geen aanbiedingen gevonden" in response:
@@ -58,7 +66,7 @@ def parse_offers(response: str) -> list[dict[str, Any]]:
             {
                 "naam": _clean(naam.group(1)),
                 "verpakking": _clean(verpakking.group(1)) if verpakking else "",
-                "winkel": _clean(winkel.group(1)).title() if winkel else "",
+                "winkel": _clean_store(winkel.group(1)) if winkel else "",
                 "prijs": prijs.group(1).replace(",", "."),
                 "literprijs": liter.group(1).replace(",", "."),
                 "geldig": _clean(geldig.group(1)) if geldig else "",
