@@ -3,10 +3,10 @@
 Alle opvallende wijzigingen aan de Biernet-integratie staan in dit bestand.
 Het versienummer komt overeen met de tag/release op GitHub en de `version` in `manifest.json`.
 
-## [1.2.2] — niet gereleased
+## [1.2.2]
 
 - Fix: het service-apparaat toonde "door biernet.nl" als maker; nu "Biernet integration"
-- Nieuw: eigen getekend icoon (`icon.png`) en logo (`logo.png`) in de repo-root, zichtbaar in HACS en het Home Assistant Marketplace
+- Nieuw: eigen getekend icoon en logo, in de repo-root (voor HACS) én in `custom_components/biernet/brand/` (voor Home Assistant 2026.3+ en het Marketplace, die de brand-map van de integratie lezen)
 
 ## [1.2.1]
 
