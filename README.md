@@ -1,4 +1,4 @@
-# Biernet for Home Assistant
+# <img src="logo.png" width="64" align="right"> Biernet for Home Assistant
 
 Custom integration that fetches filtered beer offers from [biernet.nl](https://www.biernet.nl/bier/aanbiedingen) and exposes them as a sensor, sorted by liter price. One integration entry per search profile ("zoekopdracht"), each with its own filters and sensor.
 
