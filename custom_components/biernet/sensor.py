@@ -34,7 +34,7 @@ class BiernetOfferSensor(CoordinatorEntity, SensorEntity):
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=f"Biernet {entry.data.get('name', '')}",
-            manufacturer="biernet.nl",
+            manufacturer="Biernet integration",
             entry_type=DeviceEntryType.SERVICE,
         )
 
