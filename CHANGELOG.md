@@ -3,7 +3,12 @@
 Alle opvallende wijzigingen aan de Biernet-integratie staan in dit bestand.
 Het versienummer komt overeen met de tag/release op GitHub en de `version` in `manifest.json`.
 
-## [1.2.1] — niet gereleased
+## [1.2.2] — niet gereleased
+
+- Fix: het service-apparaat toonde "door biernet.nl" als maker; nu "Biernet integration"
+- Nieuw: eigen getekend icoon (`icon.png`) en logo (`logo.png`) in de repo-root, zichtbaar in HACS en het Home Assistant Marketplace
+
+## [1.2.1]
 
 - Fix: winkelnamen zoals "Poiesz Logo" zijn nu zonder het "Logo"-achtervoegsel (biernet.nl gebruikt de titel van het logo als winkelnaam)
 - Custom card: productafbeeldingen hebben geen grijze achtergrond meer, de winkelkolom heeft een vaste breedte (logo's en namen verspringen niet meer tussen rijen) en de koptekst toont "10 van 30 aanbiedingen" in plaats van alleen het totaal
